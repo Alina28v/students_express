@@ -52,6 +52,17 @@ createTableQueries.push(`
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
    );
       `);
+createTableQueries.push(`
+ CREATE TABLE IF NOT EXISTS deadSpace (
+    id SERIAL PRIMARY KEY,
+    name_of_gun TEXT NOT NULL UNIQUE,
+    damage_type TEXT NOT NULL,
+    damage_dealth TEXT NOT NULL,
+    reload_seconds TEXT NOT NULL,           
+    additional_info TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP    
+   );
+      `);
 for await (const query of createTableQueries) {
     try {
         console.log(query.slice(0, query.indexOf('(')).trim()+"...")
