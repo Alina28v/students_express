@@ -4,7 +4,7 @@ import db from '../db/connector.js';
 import { registerSlonik, deleteSlonik, updateSlonik, checkPassword, checkAge, checkUsername, checkPlaceOfBirth } from '../controllers/slonikiController.js';
 
 router.get('/', async function(req, res, next) {
-  const sloniki = await db.query('SELECT * FROM SLONIKI');
+  const sloniki = await db.query('SELECT * FROM sloniki');
   const rowSloniki = sloniki.rows.map(s => {
     return {
       ...s,
