@@ -222,18 +222,16 @@ createTableQueries.push(`
     );
 `);
 createTableQueries.push(`
-    CREATE TABLE IF NOT EXISTS clothing (
-        id SERIAL PRIMARY KEY,
-        name TEXT NOT NULL,
-        brand TEXT,
-        category TEXT NOT NULL, 
-        size TEXT NOT NULL,     
-        color TEXT,
-        price NUMERIC(10,2),
-        material TEXT,
-        stock_quantity INTEGER DEFAULT 0,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
+    DROP TABLE IF EXISTS clothing;
+
+    CREATE TABLE clothing (
+    id SERIAL PRIMARY KEY,
+    type VARCHAR(255),
+    brand VARCHAR(255),
+    size VARCHAR(50),
+    price DECIMAL(10, 2),
+    stock_quantity INTEGER DEFAULT 0
+);  
 `);
 
 for await (const query of createTableQueries) {

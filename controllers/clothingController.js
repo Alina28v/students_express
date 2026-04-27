@@ -1,17 +1,19 @@
-import pool from '../db/index.js';
+import pool from '../db/connector.js';
 
 export const getAllClothing = async () => {
-    const res = await pool.query("SELECT * FROM clothing ORDER BY id");
+    const res = await pool.query("SELECT * FROM clothing ORDER BY id ASC");
     return res.rows;
 };
 
 export const addClothingItem = async (data) => {
+    // Тут ми використовуємо 'stock_quantity', як у твоєму connector.js
     const query = `
-        INSERT INTO clothing
-        (name, brand, category, size, color, price, material, stock_quantity)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        INSERT INTO clothing (type, brand, size, price, stock_quantity) 
+        VALUES ($1, $2, $3, $4, $5) 
         RETURNING *`;
-    const values = [data.name, data.brand, data.category, data.size, data.color, data.price, data.material, data.quantity];
+    
+    // data.stock береться з атрибуту name="stock" у твоїй формі
+    const values = [data.type, data.brand, data.size, data.price, data.stock];
     const res = await pool.query(query, values);
     return res.rows[0];
 };

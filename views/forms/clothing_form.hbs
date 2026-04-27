@@ -1,11 +1,14 @@
-<h1>Додати одяг</h1>
-<form action="/clothing/create" method="POST">
-    <p>Тип (напр. Худі): <input type="text" name="type" required></p>
-    <p>Бренд: <input type="text" name="brand" required></p>
-    <p>Розмір: <input type="text" name="size" placeholder="L, XL, 42..." required></p>
-    <p>Ціна: <input type="number" name="price" required></p>
-    <p>Кількість: <input type="number" name="stock" required></p>
-    <button type="submit" style="background: green; color: white; padding: 10px;">Зберегти</button>
+<h1>Додати новий одяг</h1>
+<hr>
+<form action="/clothing/create" method="POST" style="max-width: 400px; display: flex; flex-direction: column; gap: 15px;">
+    <label>Тип: <input type="text" name="type" required placeholder="Напр: Худі"></label>
+    <label>Бренд: <input type="text" name="brand" required placeholder="Напр: Nike"></label>
+    <label>Розмір: <input type="text" name="size" required placeholder="L, XL, 42"></label>
+    <label>Ціна ($): <input type="number" name="price" step="0.01" required></label>
+    <label>Кількість: <input type="number" name="stock" required></label>
+    
+    <button type="submit" style="background: #2563eb; color: white; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+        Зберегти товар
+    </button>
+    <a href="/clothing/list" style="text-align: center; color: #64748b;">Скасувати</a>
 </form>
-<br>
-<a href="/clothing/list">Назад</a>
