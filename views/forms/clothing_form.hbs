@@ -1,0 +1,11 @@
+<h1>Додати одяг</h1>
+<form action="/clothing/create" method="POST">
+    <p>Тип (напр. Худі): <input type="text" name="type" required></p>
+    <p>Бренд: <input type="text" name="brand" required></p>
+    <p>Розмір: <input type="text" name="size" placeholder="L, XL, 42..." required></p>
+    <p>Ціна: <input type="number" name="price" required></p>
+    <p>Кількість: <input type="number" name="stock" required></p>
+    <button type="submit" style="background: green; color: white; padding: 10px;">Зберегти</button>
+</form>
+<br>
+<a href="/clothing/list">Назад</a>
