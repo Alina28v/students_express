@@ -20,15 +20,16 @@ export const addArtifact = async (data) => {
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
             RETURNING *`;
         
+        // ВАЖЛИВО: Назви зліва (data.xxx) мають ТОЧНО збігатися з name="..." у твоїй формі hbs
         const values = [
             data.name, 
-            data.anomaly, 
+            data.origin_anomaly, // було data.anomaly
             data.rarity || 'Common', 
-            data.rad || 0, 
-            data.weight || 0, 
-            data.value || 0, 
-            data.owner, 
-            data.notes
+            parseFloat(data.radiation_level) || 0, // було data.rad
+            parseFloat(data.weight) || 0, 
+            parseInt(data.market_value) || 0, // було data.value
+            data.stalker_owner, // було data.owner
+            data.properties_notes // було data.notes
         ];
 
         const res = await pool.query(query, values);
@@ -40,7 +41,6 @@ export const addArtifact = async (data) => {
 };
 
 // 3. Оновити дані артефакту (UPDATE)
-// Наприклад, змінити ціну або власника
 export const updateArtifact = async (id, updateData) => {
     try {
         const query = `
@@ -49,7 +49,12 @@ export const updateArtifact = async (id, updateData) => {
             WHERE id = $4 
             RETURNING *`;
         
-        const values = [updateData.value, updateData.owner, updateData.notes, id];
+        const values = [
+            parseInt(updateData.market_value) || 0, 
+            updateData.stalker_owner, 
+            updateData.properties_notes, 
+            id
+        ];
         const res = await pool.query(query, values);
         
         if (res.rows.length === 0) throw new Error("Артефакт не знайдено");
