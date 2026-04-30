@@ -296,7 +296,19 @@ createTableQueries.push(`
         stalker_owner TEXT,
         properties_notes TEXT,
         found_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
+    );`);
+    
+createTableQueries.push(`
+    DROP TABLE IF EXISTS clothing;
+
+    CREATE TABLE clothing (
+    id SERIAL PRIMARY KEY,
+    type VARCHAR(255),
+    brand VARCHAR(255),
+    size VARCHAR(50),
+    price DECIMAL(10, 2),
+    stock_quantity INTEGER DEFAULT 0
+);  
 `);
 
 createTableQueries.push(`
@@ -319,6 +331,18 @@ createTableQueries.push ( `
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
    `);
+
+createTableQueries.push (`
+    CREATE TABLE IF NOT EXISTS turtles (
+  id SERIAL PRIMARY KEY,
+  name_of_turtle TEXT UNIQUE NOT NULL,
+  species TEXT NOT NULL,
+  habitat TEXT NOT NULL,
+  average_lifespan TEXT NOT NULL,
+  diet TEXT NOT NULL,
+  additional_info TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);`)
 
 for await (const query of createTableQueries) {
     try {
