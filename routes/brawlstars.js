@@ -14,6 +14,16 @@ function validateBrawler(data) {
     return errors;
 }
 
+class Brawler {
+    constructor(name, rarity, brawlerClass, health = 0, damage = 0) {
+        this.name = name;
+        this.rarity = rarity;
+        this.class = brawlerClass;
+        this.health = Number(health);
+        this.damage = Number(damage);
+    }
+}
+    
 // 1. Головна таблиця 
 router.get('/', async (req, res) => {
     try {
