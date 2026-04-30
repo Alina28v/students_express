@@ -31,6 +31,7 @@ import spotifyRouter from './routes/spotify.js';
 import notabugRouter from './routes/notabug.js'
 import turtleRouter from './routes/turtle.js';
 import kittensRouter from './routes/kittens.js'
+import requestsRouter from './routes/adoption_requests.js';
 
 import { fileURLToPath } from 'url';
 
@@ -83,6 +84,7 @@ app.use('/notabug', notabugRouter);
 app.use('/kittens', kittensRouter);
 app.use('/president',presidentRouter);
 app.use('/turtles', turtleRouter);
+app.use('/requests', requestsRouter);
 
 app.use((err, req, res, next) => {
   console.error(err.stack); 

@@ -102,6 +102,20 @@ createTableQueries.push(`
 `);
 
 createTableQueries.push(`
+  CREATE TABLE IF NOT EXISTS adoption_requests (
+    id SERIAL PRIMARY KEY,
+    pet_id INTEGER NOT NULL,
+    applicant_name TEXT NOT NULL,
+    applicant_phone TEXT NOT NULL,
+    applicant_email TEXT,
+    message TEXT,
+    status TEXT DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+`);
+
+createTableQueries.push(`
  CREATE TABLE IF NOT EXISTS deadSpace (
     id SERIAL PRIMARY KEY,
     name_of_gun TEXT NOT NULL UNIQUE,
