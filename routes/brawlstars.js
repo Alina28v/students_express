@@ -2,6 +2,18 @@ import express from 'express';
 import db from '../db/connector.js';
 const router = express.Router();
 
+// === (Валідація) ===
+function validateBrawler(data) {
+    const errors = [];
+    
+    // Перевіряємо тільки ім'я
+    if (!data.name || data.name.trim().length < 2) {
+        errors.push("Ім'я бійця має містити хоча б 2 символи");
+    }
+
+    return errors;
+}
+
 // 1. Головна таблиця 
 router.get('/', async (req, res) => {
     try {
@@ -20,6 +32,18 @@ router.get('/create', (req, res) => {
 // 3. Обробка створення
 router.post('/create', async (req, res) => {
     const { name, rarity, brawler_class, health, damage } = req.body;
+
+    // === (Перевірка імені перед створенням) ===
+    const errors = validateBrawler({ name });
+
+    if (errors.length > 0) {
+        return res.status(400).send(`
+            <h3>Помилка:</h3>
+            <p>${errors[0]}</p>
+            <a href="/brawlers/create">Назад до форми</a>
+        `);
+    }
+
     try {
         await db.query(
             'INSERT INTO brawl_stars_heroes (name, rarity, class, health, damage) VALUES ($1, $2, $3, $4, $5)',
@@ -51,6 +75,18 @@ router.get('/update', async (req, res) => {
 // 5. Обробка оновлення
 router.post('/update', async (req, res) => {
     const { currentName, newName, newRarity, newClass, newHealth, newDamage } = req.body;
+
+    // === (Перевірка імені при оновленні) ===
+    const errors = validateBrawler({ name: newName });
+
+    if (errors.length > 0) {
+        return res.status(400).send(`
+            <h3>Помилка оновлення:</h3>
+            <p>${errors[0]}</p>
+            <a href="/brawlers">Повернутися до списку</a>
+        `);
+    }
+
     try {
         await db.query(
             'UPDATE brawl_stars_heroes SET name=$1, rarity=$2, class=$3, health=$4, damage=$5 WHERE name=$6',
